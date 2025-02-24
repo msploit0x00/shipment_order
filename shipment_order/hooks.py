@@ -43,7 +43,11 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+    "Purchase Order": "public/js/purchase_order_edit.js",
+    "Material Request": "public/js/material_request_edit.js"
+}
+# doctype_js = {"Material Request" : "public/js/material_request_edit.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -129,9 +133,10 @@ app_license = "mit"
 # ---------------
 # Override standard doctype classes
 
-# override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
-# }
+override_doctype_class = {
+	"Purchase Order": "shipment_order.purchase_order_edit.CustomPurchaseOrder",
+    "Material Request" : "shipment_order.material_request_edit.CustomMaterialRequest"
+}
 
 # Document Events
 # ---------------
