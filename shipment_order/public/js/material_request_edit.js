@@ -43,8 +43,8 @@ frappe.ui.form.on('Material Request', {
     scan_barcode: function(frm) {
         
         setTimeout(() => {
-            total_shipment_qty = 0;
-            backorder_qty = 0;
+            let total_shipment_qty = [];
+            let backorder_qty = 0;
 
             frm.doc.items.forEach(function (row) {
                 let item_code_to_search = row.item_code; 
@@ -77,9 +77,18 @@ frappe.ui.form.on('Material Request', {
                                             // Find the item with the matching item_code
                                             purchase_order.items.forEach(function(item) {
                                                 if (item.item_code === item_code_to_search) {
-                                                   
+                                                
                                                     console.log('Shipment Order:', po.name, 'Item Code:', item.item_code, 'Qty:', item.qty);
-                                                    total_shipment_qty = total_shipment_qty + item.qty
+
+                                                    total_shipment_qty.push(item.qty)
+                                                    console.log('Total Shipment Quantity:', total_shipment_qty);
+
+                                                    sum = total_shipment_qty.reduce((acc, val) => acc + val, 0);
+                                                    console.log('Summmmmmmmm:', sum);
+                                                    
+                                                    backorder_qty =  row.custom_purchase_quantity  - sum
+                                                    frappe.model.set_value(row.doctype, row.name, 'custom_backorder_quantity', backorder_qty);
+                                                    console.log('Total value is : ' + backorder_qty);
                                                     
                                                 }
                                             });
@@ -88,9 +97,8 @@ frappe.ui.form.on('Material Request', {
                                     }
                                    
                                 });
-                                backorder_qty =  row.custom_purchase_quantity  - total_shipment_qty
-                                frappe.model.set_value(row.doctype, row.name, 'custom_backorder_quantity', backorder_qty);
-                                console.log('Total value is : ' + backorder_qty);
+                                
+                            
                             });
                         } else {
                             frappe.msgprint('No Purchase Order found with the specified item code.');
