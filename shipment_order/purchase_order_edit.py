@@ -7,14 +7,32 @@ class CustomPurchaseOrder(PurchaseOrder):
 
 @frappe.whitelist()
 def create_shipment_order(docname):
-    # Fetch the Purchase Order document
+   
     purchase_order = frappe.get_doc("Purchase Order", docname)
 
-    # Create a new Shipment Order
-    shipment_order = frappe.new_doc("Shipment Order")
+    
+    shipment_order = frappe.new_doc("Shipments Orders")
 
-    # Transfer data from Purchase Order to Shipment Order
+ 
     shipment_order.purchase_order_name = purchase_order.name
+    shipment_order.supplier = purchase_order.supplier
+    shipment_order.conversion_rate = purchase_order.conversion_rate
+    shipment_order.base_net_total = purchase_order.base_net_total
+    shipment_order.set_warehouse = purchase_order.set_warehouse
+    shipment_order.currency = purchase_order.currency
+    shipment_order.conversion_rate = purchase_order.conversion_rate
+    shipment_order.buying_price_list = purchase_order.buying_price_list
+    shipment_order.price_list_currency = purchase_order.price_list_currency
+    shipment_order.plc_conversion_rate = purchase_order.plc_conversion_rate
+    shipment_order.total_qty = purchase_order.total_qty
+    shipment_order.base_total = purchase_order.base_total
+    shipment_order.total = purchase_order.total
+    shipment_order.base_grand_total = purchase_order.base_grand_total
+    shipment_order.base_rounding_adjustment = purchase_order.base_rounding_adjustment
+    shipment_order.base_rounded_total = purchase_order.base_rounded_total
+    shipment_order.grand_total = purchase_order.grand_total
+    shipment_order.rounding_adjustment = purchase_order.rounding_adjustment
+    shipment_order.rounded_total = purchase_order.rounded_total
 
     for item in purchase_order.items:
 
@@ -25,12 +43,24 @@ def create_shipment_order(docname):
             "item_code": item.item_code,
             "item_name": item.item_name,
             "uom": item.uom,
-            "base_rate": item.base_rate,
-            "conversion_factor": 1,
+            "received_qty": 0,
+            "qty": total,
+            "rejected_qty": 0,
             "total_quantity_from_purchase_order": total,
-            "qty": 0,
-            "net_rate": item.rate,
-            "base_net_amount": item.amount
+            "custom_quantity_sold_in_the_last_6_month": 0,
+            "price_list_rate": item.price_list_rate,
+            "base_price_list_rate": item.base_price_list_rate,
+            "discount_percentage": item.discount_percentage,
+            "discount_amount": item.discount_amount,
+            "base_rate": item.base_rate,
+            "base_amount": item.base_amount,
+            "net_rate": item.net_rate,
+            "net_amount": item.net_amount,
+            "base_net_rate": item.base_net_rate,
+            "base_net_amount": item.base_net_amount,
+            "warehouse": item.warehouse,
+            "expense_account": item.expense_account,
+            "conversion_factor": 1,
         })
 
     # Save and submit the Shipment Order (optional)
@@ -71,12 +101,12 @@ def total_shipment_order_qty(item, docname):
         specific_item_code = item.item_code  
         total_qty = 0
 
-        purchase_orders = frappe.get_all("Shipment Order", fields=["name"], filters={"docstatus": 1,"purchase_order_name": docname})
+        purchase_orders = frappe.get_all("Shipments Orders", fields=["name"], filters={"docstatus": 1,"purchase_order_name": docname})
 
        
         for po in purchase_orders:
 
-            purchase_order = frappe.get_doc("Shipment Order", po.name)
+            purchase_order = frappe.get_doc("Shipments Orders", po.name)
             
             items = purchase_order.get("items")
             

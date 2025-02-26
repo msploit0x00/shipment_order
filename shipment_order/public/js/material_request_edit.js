@@ -7,11 +7,11 @@ frappe.ui.form.on('Material Request', {
 
                 let item_code_to_search = row.item_code; 
 
-                // Fetch all Shipment Orders containing the specified item_code
+                // Fetch all Shipments Orders containing the specified item_code
                 frappe.call({   
                     method: 'frappe.client.get_list',
                     args: {
-                        doctype: 'Shipment Order',
+                        doctype: 'Shipments Orders',
                         fields: ['name'],
                         filters: [
                             ['Shipment Items', 'item_code', '=', item_code_to_search],
@@ -20,12 +20,12 @@ frappe.ui.form.on('Material Request', {
                     },
                     callback: function(response) {
                         if (response.message && response.message.length > 0) {
-                            // Loop through each Shipment Order
+                            // Loop through each Shipments Orders
                             response.message.forEach(function(po) {
                                 frappe.call({
                                     method: 'frappe.client.get',
                                     args: {
-                                        doctype: 'Shipment Order',
+                                        doctype: 'Shipments Orders',
                                         name: po.name
                                     },
                                     callback: function(po_response) {
@@ -34,7 +34,7 @@ frappe.ui.form.on('Material Request', {
                                             // Find the item with the matching item_code
                                             purchase_order.items.forEach(function(item) {
                                                 if (item.item_code === item_code_to_search) {
-                                                    console.log('Shipment Order:', po.name, 'Item Code:', item.item_code, 'Qty:', item.qty);
+                                                    console.log('Shipments Orders:', po.name, 'Item Code:', item.item_code, 'Qty:', item.qty);
 
                                                     total_shipment_qty.push(item.qty); // Add the quantity to the list
                                                     console.log('Total Shipment Quantity:', total_shipment_qty);
@@ -52,7 +52,7 @@ frappe.ui.form.on('Material Request', {
                                 });
                             });
                         } else {
-                            frappe.msgprint('No Shipment Order found with the specified item code.');
+                            frappe.msgprint('No Shipments Orders found with the specified item code.');
                         }
                     }
                 });
@@ -97,7 +97,7 @@ frappe.ui.form.on('Material Request Item', {
             frappe.call({
                 method: 'frappe.client.get_list',
                 args: {
-                    doctype: 'Shipment Order',
+                    doctype: 'Shipments Orders',
                     fields: ['name'],
                     filters: [
                         ['Shipment Items', 'item_code', '=', item_code_to_search],
@@ -111,7 +111,7 @@ frappe.ui.form.on('Material Request Item', {
                             frappe.call({
                                 method: 'frappe.client.get',
                                 args: {
-                                    doctype: 'Shipment Order',
+                                    doctype: 'Shipments Orders',
                                     name: po.name
                                 },
                                 callback: function(po_response) {
@@ -120,7 +120,7 @@ frappe.ui.form.on('Material Request Item', {
                                
                                         shipment_order.items.forEach(function(item) {
                                             if (item.item_code === item_code_to_search) {
-                                                console.log('Shipment Order:', po.name, 'Item Code:', item.item_code, 'Qty:', item.qty);
+                                                console.log('Shipments Orders:', po.name, 'Item Code:', item.item_code, 'Qty:', item.qty);
 
                                                 total_shipment_qty.push(item.qty); 
                                                 console.log('Total Shipment Quantity:', total_shipment_qty);
@@ -138,7 +138,7 @@ frappe.ui.form.on('Material Request Item', {
                             });
                         });
                     } else {
-                        frappe.msgprint('No Shipment Order found with the specified item code.');
+                        frappe.msgprint('No Shipments Orders found with the specified item code.');
                     }
                 }
             });

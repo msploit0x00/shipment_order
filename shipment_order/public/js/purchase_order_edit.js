@@ -8,7 +8,7 @@ frappe.ui.form.on('Purchase Order', {
                         docname: frm.doc.name
                     },
                     callback: function(response) {
-                        frappe.set_route('Form', 'Shipment Order', response.message);
+                        frappe.set_route('Form', 'Shipments Orders', response.message);
                     }
                 });
             },);

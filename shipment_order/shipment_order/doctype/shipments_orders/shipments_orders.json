@@ -23,6 +23,7 @@
   "set_posting_time",
   "column_break_12",
   "company",
+  "purchase_order_name",
   "apply_putaway_rule",
   "is_return",
   "return_against",
@@ -485,7 +486,7 @@
    "label": "Items",
    "oldfieldname": "purchase_receipt_details",
    "oldfieldtype": "Table",
-   "options": "Purchase Receipt Item",
+   "options": "Shipment Items",
    "reqd": 1
   },
   {
@@ -1272,12 +1273,17 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "purchase_order_name",
+   "fieldtype": "Data",
+   "label": "Purchase Order Name"
   }
  ],
  "icon": "fa fa-truck",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-26 11:41:55.609218",
+ "modified": "2025-02-26 12:10:12.025246",
  "modified_by": "Administrator",
  "module": "shipment_order",
  "name": "Shipments Orders",
