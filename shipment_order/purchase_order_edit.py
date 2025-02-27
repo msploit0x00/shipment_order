@@ -52,6 +52,8 @@ def create_shipment_order(docname):
             "base_price_list_rate": item.base_price_list_rate,
             "discount_percentage": item.discount_percentage,
             "discount_amount": item.discount_amount,
+            "rate": item.rate,
+            "amount": item.amount,
             "base_rate": item.base_rate,
             "base_amount": item.base_amount,
             "net_rate": item.net_rate,
@@ -61,9 +63,10 @@ def create_shipment_order(docname):
             "warehouse": item.warehouse,
             "expense_account": item.expense_account,
             "conversion_factor": 1,
+            "purchase_order": purchase_order.name,
         })
 
-    # Save and submit the Shipment Order (optional)
+    
     shipment_order.insert(ignore_permissions=True)
     
 
