@@ -16,6 +16,7 @@ def create_shipment_order(docname):
  
     shipment_order.purchase_order_name = purchase_order.name
     shipment_order.supplier = purchase_order.supplier
+    shipment_order.company = purchase_order.company
     shipment_order.conversion_rate = purchase_order.conversion_rate
     shipment_order.base_net_total = purchase_order.base_net_total
     shipment_order.set_warehouse = purchase_order.set_warehouse
@@ -26,13 +27,16 @@ def create_shipment_order(docname):
     shipment_order.plc_conversion_rate = purchase_order.plc_conversion_rate
     shipment_order.total_qty = purchase_order.total_qty
     shipment_order.base_total = purchase_order.base_total
+    shipment_order.base_tax_withholding_net_total = purchase_order.base_tax_withholding_net_total
     shipment_order.total = purchase_order.total
     shipment_order.base_grand_total = purchase_order.base_grand_total
     shipment_order.base_rounding_adjustment = purchase_order.base_rounding_adjustment
     shipment_order.base_rounded_total = purchase_order.base_rounded_total
+    shipment_order.apply_discount_on  = purchase_order.apply_discount_on
     shipment_order.grand_total = purchase_order.grand_total
     shipment_order.rounding_adjustment = purchase_order.rounding_adjustment
     shipment_order.rounded_total = purchase_order.rounded_total
+    shipment_order.base_discount_amount = purchase_order.base_discount_amount
 
     for item in purchase_order.items:
 
@@ -62,8 +66,24 @@ def create_shipment_order(docname):
             "base_net_amount": item.base_net_amount,
             "warehouse": item.warehouse,
             "expense_account": item.expense_account,
-            "conversion_factor": 1,
+            "conversion_factor": item.conversion_factor,
             "purchase_order": purchase_order.name,
+            "margin_type"  : item.margin_type,
+            "margin_rate_or_amount": item.margin_rate_or_amount,
+            "rate_with_margin": item.rate_with_margin,
+            "base_rate_with_margin": item.base_rate_with_margin,
+            "description": item.description,
+            "item_group": item.item_group,
+            "stock_uom": item.stock_uom,
+            "stock_qty": item.stock_qty,
+            "stock_uom_rate" : item.stock_uom_rate,
+            "pricing_rules": item.pricing_rules,
+            "is_free_item": item.is_free_item,
+            "apply_tds": item.apply_tds,
+            "item_tax_template": item.item_tax_template,
+            "valuation_rate": item.base_net_rate,
+            "schedule_date":item.schedule_date,
+            "cost_center": item.cost_center,
         })
 
     
