@@ -27,6 +27,7 @@ def create_shipment_order(docname):
     shipment_order.plc_conversion_rate = purchase_order.plc_conversion_rate
     shipment_order.total_qty = purchase_order.total_qty
     shipment_order.base_total = purchase_order.base_total
+    shipment_order.total = purchase_order.total
     shipment_order.base_tax_withholding_net_total = purchase_order.base_tax_withholding_net_total
     shipment_order.total = purchase_order.total
     shipment_order.base_grand_total = purchase_order.base_grand_total

@@ -136,9 +136,25 @@ frappe.ui.form.on('Shipments Orders', {
                             purchase_invoice.company = shipments_orders.company;
                             purchase_invoice.naming_series = 'ACC-PINV-.YYYY.-';
                             purchase_invoice.posting_date = shipments_orders.posting_date;
-                            purchase_invoice.credit_to = '21030010001-21030019999 - مورد محلي ضريبي - D';
+                            purchase_invoice.total_qty = shipments_orders.total_qty;
+                            purchase_invoice.base_total = shipments_orders.base_total;
+                            purchase_invoice.total = shipments_orders.total;
+                            purchase_invoice.plc_conversion_rate =  shipments_orders.plc_conversion_rate;
+                            purchase_invoice.apply_discount_on = shipments_orders.apply_discount_on;
+                            purchase_invoice.base_grand_total  =  shipments_orders.base_grand_total;
+                            purchase_invoice.base_rounding_adjustment = shipments_orders.base_rounding_adjustment;
+                            purchase_invoice.base_rounded_total = shipments_orders.base_rounded_total;
+                            purchase_invoice.grand_total = shipments_orders.grand_total;
+                            purchase_invoice.rounding_adjustment = shipments_orders.rounding_adjustment;
+                            purchase_invoice.rounded_total = shipments_orders.rounded_total;
+                            purchase_invoice.outstanding_amount = shipments_orders.rounded_total;
                             purchase_invoice.payment_terms_template = 'كاش';
-                            purchase_invoice.supplier_group = 'مورد خارجي';
+
+
+
+                            // purchase_invoice.credit_to = '21030010001-21030019999 - مورد محلي ضريبي - D';
+                            // purchase_invoice.supplier_group = 'مورد خارجي';
+                           
             
                             // Add items to the Purchase Invoice
                             shipments_orders.items.forEach(item => {
