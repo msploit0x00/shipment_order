@@ -2,7 +2,6 @@ frappe.ui.form.on('Shipments Orders', {
     refresh: function(frm) {
         if (frm.doc.docstatus === 1) {  
 
-        
 
             frm.add_custom_button(__('Purchase Receipt'), function() {
                 frappe.call({
@@ -26,6 +25,7 @@ frappe.ui.form.on('Shipments Orders', {
             
                             // Set fields for the Purchase Receipt
                             purchase_receipt.naming_series = "PUR-.YYYY.-";
+                            purchase_receipt.custom_shipment_order_name = shipments_orders.name;
                             purchase_receipt.supplier = shipments_orders.supplier;
                             purchase_receipt.posting_date = shipments_orders.posting_date;
                             purchase_receipt.posting_time = shipments_orders.posting_time;
