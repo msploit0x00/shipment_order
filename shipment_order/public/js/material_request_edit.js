@@ -52,7 +52,7 @@ frappe.ui.form.on('Material Request', {
                                 });
                             });
                         } else {
-                            frappe.msgprint('No Shipments Orders found with the specified item code.');
+                            frappe.model.set_value(row.doctype, row.name, 'custom_backorder_quantity',row.custom_purchase_quantity);
                         }
                     }
                 });
@@ -138,7 +138,7 @@ frappe.ui.form.on('Material Request Item', {
                             });
                         });
                     } else {
-                        frappe.msgprint('No Shipments Orders found with the specified item code.');
+                        frappe.model.set_value(row.doctype, row.name, 'custom_backorder_quantity',row.custom_purchase_quantity);
                     }
                 }
             });
