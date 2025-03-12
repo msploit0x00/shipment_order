@@ -42,7 +42,7 @@ frappe.ui.form.on('Material Request', {
                                                     let sum = total_shipment_qty.reduce((acc, val) => acc + val, 0);
                                                     console.log('Summmmmmmmm:', sum);
                                                     
-                                                    backorder_qty = row.custom_purchase_quantity - sum;
+                                                    backorder_qty = row.custom_purchase_quantity - sum - row.custom_received_quantity;
                                                     frappe.model.set_value(row.doctype, row.name, 'custom_backorder_quantity', backorder_qty);
                                                     console.log('Total value is : ' + backorder_qty);
                                                 }
@@ -128,7 +128,7 @@ frappe.ui.form.on('Material Request Item', {
                                                 let sum = total_shipment_qty.reduce((acc, val) => acc + val, 0);
                                                 console.log('Total Shipment Sum:', sum);
 
-                                                backorder_qty = row.custom_purchase_quantity - sum;
+                                                backorder_qty = row.custom_purchase_quantity - sum - row.custom_received_quantity;
                                                 frappe.model.set_value(cdt, cdn, 'custom_backorder_quantity', backorder_qty);
                                                 console.log('Backorder Quantity:', backorder_qty);
                                             }
