@@ -14,41 +14,6 @@ frappe.ui.form.on('Purchase Order', {
             },__('Create'));
         }
     },
-    onload: function(frm) {
-        let promises = [];
-
-        frm.doc.items.forEach((Purchase_order) => {
-            console.log('Purchase order', Purchase_order.name);
-            // if (shipment_row.purchase_order) {
-            //     // Asynchronously fetch the Purchase Order document
-            //     let p = frappe.db.get_doc('Purchase Order', shipment_row.purchase_order).then((po_doc) => {
-            //         let match_found = po_doc.items.some((po_item) => {
-            //             return (
-            //                 po_item.item_code === shipment_row.item_code &&
-            //                 po_item.name === shipment_row.name
-            //             );
-            //         });
-
-            //         if (!match_found) {
-            //             frappe.msgprint({
-            //                 title: __('Validation Error'),
-            //                 message: __('Item {0} with row name {1} does not match the Purchase Order {2}', [
-            //                     shipment_row.item_code,
-            //                     shipment_row.name,
-            //                     shipment_row.purchase_order
-            //                 ]),
-            //                 indicator: 'red'
-            //             });
-            //             frappe.validated = false;
-            //         }
-            //     });
-            //     promises.push(p);
-            // }
-        });
-
-        // Wait for all async calls before validating
-        return Promise.all(promises);
-    }
 });
 
 
