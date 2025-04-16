@@ -135,7 +135,7 @@ doctype_js = {
 
 override_doctype_class = {
 	"Purchase Order": "shipment_order.purchase_order_edit.CustomPurchaseOrder",
-    "Material Request" : "shipment_order.material_request_edit.CustomMaterialRequest"
+    #"Material Request" : "shipment_order.material_request_edit.CustomMaterialRequest"
 }
 
 # Document Events
