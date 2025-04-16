@@ -197,6 +197,103 @@ frappe.ui.form.on('Shipments Orders', {
             
 
         }
+    },
+
+    onload: function(frm) {
+        // Get all items from the current Shipments Orders
+        const shipment_items = frm.doc.items || [];
+        
+        // Exit if no items
+        if (!shipment_items.length) return;
+        
+        // Process each item in the shipment
+        shipment_items.forEach(function(item) {
+            // Skip if no purchase order reference
+            if (!item.purchase_order) return;
+            
+            // Get the purchase order document
+            frappe.call({
+                method: "frappe.client.get",
+                args: {
+                    doctype: "Purchase Order",
+                    name: item.purchase_order
+                },
+                callback: function(response) {
+                    if (response.message) {
+                        const po_doc = response.message;
+                        
+                        // Get items from the purchase order
+                        const po_items = po_doc.items || [];
+                        
+                        // Find matching item in purchase order
+                        po_items.forEach(function(po_item) {
+                            // Check if item_code matches original_item_name and row.name matches
+                            if (po_item.name === item.original_item_name && po_item.item_code === item.item_code) {
+                                // Update qty from shipment to purchase order item without saving
+                                frappe.model.set_value(
+                                    item.doctype,
+                                    item.name,
+                                    'qty',
+                                    po_item.qty
+                                );
+                                console.log('po_item.name', po_item.name);
+                                console.log('item.original_item_name', item.original_item_name);
+                                // Show notification without saving
+                                frappe.show_alert({
+                                    message: __("Quantity updated in Purchase Order (Draft)"),
+                                    indicator: 'green'
+                                }, 3);
+                            }
+                        });
+                    }
+                }
+            });
+        });
     }
+
+
+
+    // onload: function(frm) {
+    //     let promises = [];
+
+    //     frm.doc.items.forEach((shipment_row) => {
+    //         console.log('shipment_row', shipment_row.original_item_name);
+    //         // if (shipment_row.purchase_order) {
+    //         //     // Asynchronously fetch the Purchase Order document
+    //         //     let p = frappe.db.get_doc('Purchase Order', shipment_row.purchase_order).then((po_doc) => {
+    //         //         let match_found = po_doc.items.some((po_item) => {
+    //         //             return (
+    //         //                 po_item.item_code === shipment_row.item_code &&
+    //         //                 po_item.name === shipment_row.name
+    //         //             );
+    //         //         });
+
+    //         //         if (!match_found) {
+    //         //             frappe.msgprint({
+    //         //                 title: __('Validation Error'),
+    //         //                 message: __('Item {0} with row name {1} does not match the Purchase Order {2}', [
+    //         //                     shipment_row.item_code,
+    //         //                     shipment_row.name,
+    //         //                     shipment_row.purchase_order
+    //         //                 ]),
+    //         //                 indicator: 'red'
+    //         //             });
+    //         //             frappe.validated = false;
+    //         //         }
+    //         //     });
+    //         //     promises.push(p);
+    //         // }
+    //     });
+
+    //     // Wait for all async calls before validating
+    //     return Promise.all(promises);
+    // }
 });
           
+
+
+
+
+
+
+

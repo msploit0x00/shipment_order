@@ -45,8 +45,9 @@ def create_shipment_order(docname):
         
 
         shipment_order.append("items", {
-            "item_code": item.item_code,
             "item_name": item.item_name,
+            "original_item_name": item.name,
+            "item_code": item.item_code,
             "uom": item.uom,
             "received_qty": item.received_qty,
             "qty": total,

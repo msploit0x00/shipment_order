@@ -25,6 +25,7 @@
   "column_break_12",
   "company",
   "purchase_order_name",
+  "purchase_order",
   "apply_putaway_rule",
   "is_return",
   "return_against",
@@ -1275,12 +1276,18 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "purchase_order",
+   "fieldtype": "Link",
+   "label": "Purchase Order",
+   "options": "Purchase Order"
   }
  ],
  "icon": "fa fa-truck",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-13 13:15:52.775645",
+ "modified": "2025-04-15 14:19:21.568784",
  "modified_by": "Administrator",
  "module": "shipment_order",
  "name": "Shipments Orders",
